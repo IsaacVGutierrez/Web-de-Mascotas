@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Página de Mascotas</title>
+  <style>
+    .mascota {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+    .mascota img {
+      width: 100px;
+      height: 100px;
+      margin-right: 10px;
+    }
+    .mascota .info {
+      margin-left: 10px;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    #agregar {
+      margin-top: 10px;
+    }
+    #mascotas {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Página de Mascotas</h1>
+
+  <form>
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
+    </div>
+
+    <div class="form-group">
+      <label for="edad">Edad:</label>
+      <input type="number" id="edad" name="edad" required>
+    </div>
+
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+    </div>
+    <div class="form-group">
+      <textarea id="descripcion" name="descripcion" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="foto">Foto:</label>
+      <input type="file" id="foto" name="foto" accept="image/*" required>
+    </div>
+
+    <button id="agregar" type="submit">Agregar Mascota</button>
+  </form>
+
+  <h2>Mascotas:</h2>
+  <div id="mascotas"></div>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      // Obtener los valores ingresados por el usuario
+      var nombre = document.getElementById('nombre').value;
+      var edad = document.getElementById('edad').value;
+      var descripcion = document.getElementById('descripcion').value;
+      var foto = document.getElementById('foto').files[0];
+      
+      // Crear un objeto URL para la imagen seleccionada
+      var fotoUrl = URL.createObjectURL(foto);
+
+      // Crear un elemento div para mostrar la mascota
+      var mascotaDiv = document.createElement('div');
+      mascotaDiv.classList.add('mascota');
+      
+      // Crear elementos para mostrar la información de la mascota
+      var imagen = document.createElement('img');
+      imagen.src = fotoUrl;
+      var infoDiv = document.createElement('div');
+      infoDiv.classList.add('info');
+      var nombreElemento = document.createElement('h3');
+      nombreElemento.textContent = 'Nombre: ' + nombre;
+      var edadElemento = document.createElement('p');
+      edadElemento.textContent = 'Edad: ' + edad + ' años';
+      var descripcionElemento = document.createElement('p');
+      descripcionElemento.textContent = 'Descripción: ' + descripcion;
+
+      // Agregar los elementos al div de la mascota
+      infoDiv.appendChild(nombreElemento);
+      infoDiv.appendChild(edadElemento);
+      infoDiv.appendChild(descripcionElemento);
+      mascotaDiv.appendChild(imagen);
+      mascotaDiv.appendChild(infoDiv);
+      
+      // Agregar el div de la mascota al contenedor de mascotas
+      document.getElementById('mascotas').appendChild(mascotaDiv);
+      
+      // Reiniciar el formulario
+      document.querySelector('form').reset();
+    });
+  </script>
+</body>
+</html>
